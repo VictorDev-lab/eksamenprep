@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EksamenPrep</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .tab.active {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .profile {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .profile h3 {
+            margin-bottom: 10px;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>EksamenPrep</h1>
+        <p class="subtitle">Exam Preparation Platform</p>
+
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('login')">Login</div>
+            <div class="tab" onclick="showTab('register')">Register</div>
+            <div class="tab" onclick="showTab('profile')">Profile</div>
+        </div>
+
+        <!-- Login Form -->
+        <div id="loginForm" class="form-container active">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="loginEmail" placeholder="student@example.com">
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="••••••••">
+            </div>
+            <button onclick="login()">Login</button>
+            <div id="loginMessage" class="message hidden"></div>
+        </div>
+
+        <!-- Registration Form -->
+        <div id="registerForm" class="form-container">
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="regName" placeholder="John Doe">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="regEmail" placeholder="student@example.com">
+            </div>
+            <div class="form-group">
+                <label>Password (min. 6 characters)</label>
+                <input type="password" id="regPassword" placeholder="••••••••">
+            </div>
+            <div class="form-group">
+                <label>Registration Key</label>
+                <input type="text" id="regKey" placeholder="exam2025">
+            </div>
+            <button onclick="register()">Register</button>
+            <div id="registerMessage" class="message hidden"></div>
+        </div>
+
+        <!-- Profile Section -->
+        <div id="profileSection" class="form-container">
+            <div id="profileContent" class="profile">
+                <h3>User Profile</h3>
+                <p>Please login to view your profile</p>
+            </div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+            <div id="profileMessage" class="message hidden"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000/api';
+        let currentToken = localStorage.getItem('token');
+
+        // Tab switching
+        function showTab(tabName) {
+            // Update tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Show selected form
+            document.querySelectorAll('.form-container').forEach(form => {
+                form.classList.remove('active');
+            });
+            const formId = tabName === 'profile' ? 'Section' : 'Form';
+            document.getElementById(tabName + formId).classList.add('active');
+
+            // Load profile if on profile tab and logged in
+            if (tabName === 'profile' && currentToken) {
+                fetchProfile();
+            }
+        }
+
+        // Show message
+        function showMessage(elementId, text, isError = false) {
+            const element = document.getElementById(elementId);
+            element.textContent = text;
+            element.className = `message ${isError ? 'error' : 'success'}`;
+            element.classList.remove('hidden');
+            setTimeout(() => element.classList.add('hidden'), 5000);
+        }
+
+        // Login function
+        async function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                showMessage('loginMessage', 'Please fill in all fields', true);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    currentToken = data.token;
+                    localStorage.setItem('token', data.token);
+                    showMessage('loginMessage', 'Login successful!');
+                    showTab('profile');
+                } else {
+                    showMessage('loginMessage', data.error || 'Login failed', true);
+                }
+            } catch (error) {
+                showMessage('loginMessage', 'Network error', true);
+            }
+        }
+
+        // Register function
+        async function register() {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const regKey = document.getElementById('regKey').value;
+
+            if (!name || !email || !password || !regKey) {
+                showMessage('registerMessage', 'Please fill in all fields', true);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-registration-key': regKey
+                    },
+                    body: JSON.stringify({ name, email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage('registerMessage', 'Registration successful! Please login.');
+                    // Clear form
+                    document.getElementById('regName').value = '';
+                    document.getElementById('regEmail').value = '';
+                    document.getElementById('regPassword').value = '';
+                    document.getElementById('regKey').value = '';
+                    showTab('login');
+                } else {
+                    showMessage('registerMessage', data.error || 'Registration failed', true);
+                }
+            } catch (error) {
+                showMessage('registerMessage', 'Network error', true);
+            }
+        }
+
+        // Fetch profile
+        async function fetchProfile() {
+            if (!currentToken) {
+                document.getElementById('profileContent').innerHTML = `
+                    <h3>User Profile</h3>
+                    <p>Please login to view your profile</p>
+                `;
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/profile`, {
+                    headers: {
+                        'Authorization': `Bearer ${currentToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const user = data.user;
+                    const date = new Date(user.created_at).toLocaleDateString('no-NO');
+                    
+                    document.getElementById('profileContent').innerHTML = `
+                        <h3>Welcome, ${user.name}!</h3>
+                        <p><strong>Email:</strong> ${user.email}</p>
+                        <p><strong>User ID:</strong> ${user.id}</p>
+                        <p><strong>Member since:</strong> ${date}</p>
+                    `;
+                } else if (response.status === 401) {
+                    // Token expired
+                    localStorage.removeItem('token');
+                    currentToken = null;
+                    document.getElementById('profileContent').innerHTML = `
+                        <h3>User Profile</h3>
+                        <p>Session expired. Please login again.</p>
+                    `;
+                }
+            } catch (error) {
+                showMessage('profileMessage', 'Error fetching profile', true);
+            }
+        }
+
+        // Logout
+        function logout() {
+            localStorage.removeItem('token');
+            currentToken = null;
+            document.getElementById('profileContent').innerHTML = `
+                <h3>User Profile</h3>
+                <p>You have been logged out.</p>
+            `;
+            showTab('login');
+        }
+
+        // Check token on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (currentToken) {
+                fetchProfile();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,3 @@
+-- This file is optional and can be used to initialize the database with data.
+-- It runs when the MySQL container is first started.
+-- For now, we'll leave it empty because the table creation is done in server.js.
