@@ -8,6 +8,7 @@ import pool from './db.js';
 import authRoutes from './routes/auth.routes.js';
 import apiRoutes from './routes/api.routes.js';
 import usersRoutes from './routes/users.routes.js';
+import storeRoutes from './routes/store.routes.js';
 
 dotenv.config();
 
@@ -66,6 +67,7 @@ const initializeDatabase = async (retries = 5, interval = 2000) => {
 app.use('/api/auth', authRoutes);
 app.use('/api', apiRoutes);
 app.use('/api/users', usersRoutes);
+app.use('/api/store', storeRoutes);
 
 // Root endpoint
 app.get('/', (req, res) => {
