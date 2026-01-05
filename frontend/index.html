@@ -221,9 +221,9 @@
         <p class="subtitle">Your Gateway to Success</p>
 
         <div class="tabs">
-            <div class="tab active" onclick="showTab('login')">Login</div>
-            <div class="tab" onclick="showTab('register')">Register</div>
-            <div class="tab" onclick="showTab('profile')">Profile</div>
+<div class="tab active" onclick="showTab(this, 'login')">Login</div>
+<div class="tab" onclick="showTab(this, 'register')">Register</div>
+<div class="tab" onclick="showTab(this, 'profile')">Profile</div>
         </div>
 
         <!-- Login Form -->
@@ -275,9 +275,6 @@
     </div>
 
     <script>
-        const API_BASE = 'http://localhost:3000/api';
-        let currentToken = localStorage.getItem('token');
-
         // Tab switching
         function showTab(tabName) {
             // Update tabs
@@ -440,5 +437,6 @@
             }
         });
     </script>
+    <script src="app.js"></script>
 </body>
 </html>
