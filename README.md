@@ -289,4 +289,5 @@ Or edit the migration file: `backend/migrations/create-store-tables.sql`
 🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓
 
 ## 👨‍💻 License & Author
+
 VBK Built with ❤️ and 🔥
