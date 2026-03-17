@@ -1,4 +1,4 @@
-# 🎓 EksamenPrep - Exam Preparation Platform
+# 🎓 Exam Platform
 
 A full-stack web application with authentication, user profiles, and an e-commerce store for educational courses.
 
@@ -47,11 +47,10 @@ docker-compose down
 
 ### Default Credentials
 
-**Registration Key**: `exam2025`
+**Registration Key**: `exam2026`
 
 ## 📁 Project Structure
 
-```
 eksamenprep/
 ├── backend/
 │   ├── controllers/
@@ -121,7 +120,7 @@ mysql -h 127.0.0.1 -P 3308 -u eksamenprep_user -peksamenprep_password eksamenpre
 - 💰 Order history with status badges
 - 🎯 Clean, modern UI
 
-## 📡 API Endpoints
+## 📡 API Endpoints, and vulnerable code below
 
 ### Authentication
 - `POST /api/auth/register` - Register new user (requires registration key)
@@ -145,7 +144,7 @@ mysql -h 127.0.0.1 -P 3308 -u eksamenprep_user -peksamenprep_password eksamenpre
 - `GET /api/health` - Health check
 
 ## 🔐 Environment Variables
-
+## shhh
 Located in `backend/.env`:
 
 ```env
@@ -159,11 +158,11 @@ JWT_SECRET=your_super_secret_jwt_key_change_in_production
 JWT_EXPIRES_IN=1h
 
 PORT=3000
-REGISTRATION_KEY=exam2025
+REGISTRATION_KEY=exam2026
 NODE_ENV=development
 ```
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Backend
 - Node.js + Express
@@ -177,8 +176,9 @@ NODE_ENV=development
 - Modern CSS animations
 - Responsive design
 - Fetch API for HTTP requests
+- yes ai help and a full stack working directory
 
-## 📝 Available Products
+## 📝 Available Products Just demo/fake prices
 
 1. **JavaScript Course** - 499 NOK
 2. **Python Course** - 599 NOK
@@ -191,7 +191,7 @@ NODE_ENV=development
 
 ## 🎯 Testing
 
-1. Register a new account with registration key `exam2025`
+1. Register a new account with registration key `exam2026`
 2. Login with your credentials
 3. Visit the store from your profile
 4. Add products to cart
@@ -220,10 +220,73 @@ docker-compose down -v
 docker-compose up -d
 ```
 
-## 📄 License
+# 🎨Images 🤓
+### 1. JavaScript Course (499 NOK)
+- **Image**: Coffee and code workspace with JavaScript vibes
+- **URL**: `https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a`
+- **Theme**: Warm, inviting coding environment
 
-MIT
+### 2. Python Course (599 NOK)
+- **Image**: Python programming and tech workspace
+- **URL**: `https://images.unsplash.com/photo-1526379095098-d400fd0bf935`
+- **Theme**: Clean, professional coding setup
 
-## 👨‍💻 Author
+### 3. React Framework (699 NOK)
+- **Image**: Modern React development workspace
+- **URL**: `https://images.unsplash.com/photo-1633356122544-f134324a6cee`
+- **Theme**: Modern frontend development
 
-Built with ❤️ and 🔥
+### 4. Node.js Backend (549 NOK)
+- **Image**: Server-side coding environment
+- **URL**: `https://images.unsplash.com/photo-1627398242454-45a1465c2479`
+- **Theme**: Backend development focus
+
+### 5. Database Design (449 NOK)
+- **Image**: Database and data management
+- **URL**: `https://images.unsplash.com/photo-1544383835-bda2bc66a55d`
+- **Theme**: Data organization and structure
+
+### 6. DevOps Basics (799 NOK)
+- **Image**: DevOps and cloud infrastructure
+- **URL**: `https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9`
+- **Theme**: Modern DevOps practices
+
+### 7. Web Design (399 NOK)
+- **Image**: Creative web design workspace
+- **URL**: `https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d`
+- **Theme**: UI/UX design focus
+
+### 8. Git & GitHub (299 NOK)
+- **Image**: Version control and collaboration
+- **URL**: `https://images.unsplash.com/photo-1556075798-4825dfaaf498`
+- **Theme**: Git workflow and collaboration
+
+## 🎯 Image Specifications🤓
+
+- **Format**: JPEG from Unsplash CDN
+- **Dimensions**: 400x300 (optimized for web)
+- **Fit**: Cropped to maintain aspect ratio
+- **Quality**: High-resolution, professional photography
+- **Loading**: Fast CDN delivery via Unsplash
+
+## 🔄 Changing Images🤓
+
+To update a product image:
+
+```sql
+UPDATE products 
+SET image_url = 'YOUR_NEW_IMAGE_URL' 
+WHERE id = PRODUCT_ID;
+```
+Or edit the migration file: `backend/migrations/create-store-tables.sql`
+
+## 💡 Image Tips🤓
+- Use 400x300 dimensions for consistency
+- Keep file sizes optimized for web
+- Choose images that represent the course content
+- Unsplash provides free, high-quality images
+- Add `?w=400&h=300&fit=crop` for proper sizing
+🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓
+
+## 👨‍💻 License & Author
+VBK Built with ❤️ and 🔥

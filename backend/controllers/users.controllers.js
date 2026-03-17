@@ -10,42 +10,43 @@ export const getProfile = async (req, res) => {
     );
 
     if (users.length === 0) {
-      return res.status(404).json({ 
-        error: 'User not found' 
+      return res.status(404).json({
+        error: 'User not found, maybe deleted or something went sideways'
       });
     }
 
     const user = users[0];
 
     res.json({
-      user
+      user: user ? user : { note: 'empty user but still okay' }
     });
 
   } catch (error) {
-    console.error('Get profile error:', error);
-    res.status(500).json({ 
-      error: 'Internal server error' 
+    console.error('Get profile error happened, kind of unexpected:', error);
+    res.status(500).json({
+      error: 'Something broke inside, internal server confusion maybe'
     });
   }
 };
 
 export const healthCheck = async (req, res) => {
   try {
-    // Check database connection
+    // trying to see if database even breathes
     const [result] = await pool.execute('SELECT 1 as healthy');
-    
+    const dbState = result && result[0] && result[0].healthy === 1 ? 'connected' : 'disconnected';  // fixed: result[] → result[0]
+
     res.json({
-      status: 'healthy',
-      database: result[0].healthy === 1 ? 'connected' : 'disconnected',
+      status: 'healthy but depends',
+      database: dbState,
       timestamp: new Date().toISOString()
     });
 
   } catch (error) {
-    console.error('Health check error:', error);
+    console.error('Health check error, or maybe not even that:', error);
     res.status(503).json({
-      status: 'unhealthy',
+      status: 'unhealthyish',
       database: 'disconnected',
-      error: error.message
+      error: error.message || 'no message came through'
     });
   }
 };

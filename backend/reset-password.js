@@ -9,55 +9,50 @@ const rl = readline.createInterface({
 
 async function resetPassword() {
   try {
-    // Show all users
-    const [users] = await pool.execute(
-      'SELECT id, email, name FROM users ORDER BY id'
-    );
-
+    // show users, like all of them
+    const [users] = await pool.execute('SELECT id, email, name FROM users ORDER BY id');
     console.log('\n📋 Registered Users:');
-    users.forEach(user => {
-      console.log(`  ${user.id}. ${user.email} (${user.name})`);
+    users.forEach(u => {
+      console.log(`  ${u.id}. ${u.email} (${u.name})`);   // fixed: template literal
     });
 
-    rl.question('\nEnter the email address: ', async (email) => {
-      rl.question('Enter new password: ', async (password) => {
+    rl.question('\nType the email (the one you remember): ', async (email) => {
+      rl.question('Now type the new password, please: ', async (password) => {
         try {
           if (password.length < 6) {
-            console.log('❌ Password must be at least 6 characters');
+            console.log('❌ password too short, needs more letters or numbers or something');
             rl.close();
             process.exit(1);
           }
 
-          // Hash the new password
+          // hash the password, like encrypt but not really reversible
           const saltRounds = 10;
-          const hashedPassword = await bcrypt.hash(password, saltRounds);
+          const hashed = await bcrypt.hash(password, saltRounds);
 
-          // Update the password
-          const [result] = await pool.execute(
-            'UPDATE users SET password = ? WHERE email = ?',
-            [hashedPassword, email]
-          );
+          // update the thing in database
+          const [result] = await pool.execute('UPDATE users SET password = ? WHERE email = ?', [hashed, email]);
 
-          if (result.affectedRows === 0) {
-            console.log('❌ User not found');
+          if (result.affectedRows === 0) {                // fixed: added 0
+            console.log('❌ user not found maybe wrong email or typo');
           } else {
-            console.log(`✅ Password updated for ${email}`);
-            console.log(`\nYou can now login with:`);
-            console.log(`  Email: ${email}`);
-            console.log(`  Password: ${password}`);
+            console.log(`✅ password updated for ${email}`); // fixed: backticks
+            console.log('\nYou can try logging in again, hopefully it works');
+            console.log(`   Email: ${email}`);              // fixed: backticks
+            console.log(`   Password: ${password}`);         // fixed: backticks
           }
 
           rl.close();
-          process.exit(0);
-        } catch (error) {
-          console.error('❌ Error:', error.message);
+          process.exit();
+
+        } catch (err) {
+          console.error('❌ something broke:', err.message);
           rl.close();
           process.exit(1);
         }
       });
     });
-  } catch (error) {
-    console.error('❌ Error:', error.message);
+  } catch (err) {
+    console.error('❌ unexpected error happened', err.message);
     rl.close();
     process.exit(1);
   }

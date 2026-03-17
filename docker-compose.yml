@@ -9,7 +9,7 @@ services:
       MYSQL_PASSWORD: eksamenprep_password
       MYSQL_ROOT_PASSWORD: rootpassword
     ports:
-      - "3308:3306"   # ⬅️ ENDRET FRA 3307 → 3308
+      - "3308:3306"   # ⬅️ Changed from 3307 → 3308
     volumes:
       - mysql_data:/var/lib/mysql
       - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
@@ -38,7 +38,7 @@ services:
       DB_PASSWORD: eksamenprep_password
       DB_NAME: eksamenprep_db
       JWT_SECRET: your_super_secret_jwt_key_change_in_production
-      REGISTRATION_KEY: exam2025
+      REGISTRATION_KEY: exam2026
     volumes:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
