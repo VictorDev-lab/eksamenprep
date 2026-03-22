@@ -1,7 +1,5 @@
 # 🎓 Exam Platform
-
 A full-stack web application with authentication, user profiles, and an e-commerce store for educational courses.
-
 ## ✨ Features
 
 ### Authentication System
@@ -98,14 +96,6 @@ docker exec -it eksamenprep_backend node reset-password.js
 ./test-endpoints.sh
 ```
 
-### Direct Database Access
-
-```bash
-mysql -h 127.0.0.1 -P 3308 -u eksamenprep_user -peksamenprep_password eksamenprep_db
-```
-
-## 🎨 Design Features
-
 ### Login Page
 - 🌈 Animated gradient background
 - ✨ Smooth fade-in animations
@@ -146,21 +136,6 @@ mysql -h 127.0.0.1 -P 3308 -u eksamenprep_user -peksamenprep_password eksamenpre
 ## 🔐 Environment Variables
 ## shhh
 Located in `backend/.env`:
-
-```env
-DB_HOST=mysql
-DB_PORT=3306
-DB_USER=eksamenprep_user
-DB_PASSWORD=eksamenprep_password
-DB_NAME=eksamenprep_db
-
-JWT_SECRET=your_super_secret_jwt_key_change_in_production
-JWT_EXPIRES_IN=1h
-
-PORT=3000
-REGISTRATION_KEY=exam2026
-NODE_ENV=development
-```
 
 ## Tech Stack
 
@@ -205,13 +180,6 @@ NODE_ENV=development
 docker-compose down
 docker-compose up -d
 docker logs eksamenprep_backend
-```
-
-### Database connection issues
-```bash
-docker restart eksamenprep_mysql
-sleep 5
-docker restart eksamenprep_backend
 ```
 
 ### Reset everything
@@ -259,7 +227,7 @@ docker-compose up -d
 ### 8. Git & GitHub (299 NOK)
 - **Image**: Version control and collaboration
 - **URL**: `https://images.unsplash.com/photo-1556075798-4825dfaaf498`
-- **Theme**: Git workflow and collaboration
+
 
 ## 🎯 Image Specifications🤓
 
@@ -286,8 +254,6 @@ Or edit the migration file: `backend/migrations/create-store-tables.sql`
 - Choose images that represent the course content
 - Unsplash provides free, high-quality images
 - Add `?w=400&h=300&fit=crop` for proper sizing
-🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓🤓
 
 ## 👨‍💻 License & Author
-
-VBK Built with ❤️ and 🔥
+VBK Built with ❤️ and 🔥 was dumb and called it eksamenprep in the docker file so its better to stick with it.

@@ -21,7 +21,7 @@ router.get('/products', getProducts)
 router.get('/products/:id', getProduct)
 router.get('/categories', getCategories)
 
-// Protected routes (these ones need the key, the auth thing)
+// Protected routes (these ones need the key, the auth)
 router.get('/cart', authMiddleware, getCart)
 router.post('/cart', authMiddleware, addToCart)
 router.put('/cart/:id', authMiddleware, updateCartItem)

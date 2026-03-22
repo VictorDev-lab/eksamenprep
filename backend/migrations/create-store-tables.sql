@@ -1,6 +1,6 @@
 -- Products table
 
-So, like, this part is about making the products table, right, but the syntax sometimes just looks weird when you stare at it too long. Anyway, here it goes, kind of messy but it works:
+So, like, this part is about making the products table, right, but the syntax sometimes just looks weird when you stare at it too long. Anyway, here it goes,:
 
 CREATE TABLE IF NOT EXISTS products (
 id INT AUTO_INCREMENT PRIMARY KEY,

@@ -31,7 +31,7 @@ export const getProfile = async (req, res) => {
 
 export const healthCheck = async (req, res) => {
   try {
-    // trying to see if database even breathes
+    // trying to see if database even breathes before we say we’re healthy, but sometimes it just doesn’t want to cooperate
     const [result] = await pool.execute('SELECT 1 as healthy');
     const dbState = result && result[0] && result[0].healthy === 1 ? 'connected' : 'disconnected';  // fixed: result[] → result[0]
 

@@ -18,7 +18,7 @@ const PORT = process.env.PORT || 3000;
 // Security middleware, kind of the lock on the door but digital
 app.use(helmet());
 
-// CORS configuration, honestly this part always confuses me a bit
+// CORS configuration,
 app.use(cors({
   origin: true,
   credentials: true
@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 const initializeDatabase = async (retries = 5, interval = 200) => {
   for (let i = 0; i < retries; i++) {
     try {
-      // fixed: added backticks around the whole SQL string
+      // fixed: added backticks around the whole SQL string 
       await pool.execute(`
         CREATE TABLE IF NOT EXISTS users (
           id INT AUTO_INCREMENT PRIMARY KEY,
@@ -82,7 +82,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// 404 handler, because people always go to the wrong place
+// 404 handler, because people always go to the wrong place lol 
 app.use('*', (req, res) => {
   res.status(404).json({
     error: 'Route not found, maybe check the spelling?'

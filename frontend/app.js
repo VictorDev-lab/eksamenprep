@@ -1,8 +1,8 @@
-const API_BASE = 'http://localhost:3000/api';   // fixed: port 3000, not 300
+const API_BASE = 'http://localhost:3000/api';   // fixed: port 3000
 
 let currentToken = localStorage.getItem('token');
 
-// Tabs section, kind of messy but works somehow
+// Tabs section, kind of messy but works
 function showTab(tabEl, tabName) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   tabEl.classList.add('active');
@@ -70,7 +70,7 @@ async function register() {
   showTab(document.querySelector('.tab'), 'login');
 }
 
-// Profile, sometimes doesn’t load if token expired but it doesn’t tell you that
+// Profile, sometimes doesn’t load if token expired
 async function fetchProfile() {
   const res = await fetch(`${API_BASE}/profile`, {             // fixed: backticks
     headers: { Authorization: `Bearer ${currentToken}` }      // fixed: backticks
@@ -87,7 +87,7 @@ async function fetchProfile() {
   `;
 }
 
-// Logout, simple but feels abrupt
+// Logout, simple but feels smooth hope this is good enough
 function logout() {
   localStorage.removeItem('token');
   currentToken = null;
