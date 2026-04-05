@@ -13,8 +13,7 @@ import storeRoutes from './routes/store.routes.js';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
+const PORT = process.env.PORT || 10000;
 // Security middleware, kind of the lock on the door but digital
 app.use(helmet());
 
