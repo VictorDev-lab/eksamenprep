@@ -1,4 +1,6 @@
-const API_BASE = 'http://localhost:3000/api';   // fixed: port 3000
+const API_BASE = window.API_BASE || (window.location.hostname === 'localhost' && window.location.port === '8080'
+  ? 'http://localhost:3000/api'
+  : '/api');
 
 let currentToken = localStorage.getItem('token');
 

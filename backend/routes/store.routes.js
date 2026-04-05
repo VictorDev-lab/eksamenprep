@@ -10,7 +10,7 @@ removeFromCart,
 checkout,
 getOrders,
 getCategories
-} from '../controllers/store.controllers.js';
+} from '../controllers/products.controllers.js';
 
 import authMiddleware from '../middleware/auth.js';
 
