@@ -10,7 +10,9 @@ const connectionString = process.env.DATABASE_URL ||
 
 const pool = new Pool({
   connectionString,
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+  ssl: process.env.NODE_ENV === 'production'
+    ? { rejectUnauthorized: false } // Render krever dette
+    : false, // Lokal dev uten SSL
 });
 
 export default pool;

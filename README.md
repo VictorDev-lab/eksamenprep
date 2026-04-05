@@ -36,12 +36,14 @@ docker logs eksamenprep_mysql
 docker-compose down
 ```
 
-### Access Points
+### Access Points (local development)
 
 - **Frontend**: http://localhost:8080
 - **Store**: http://localhost:8080/store.html
 - **Backend API**: http://localhost:3000
 - **Health Check**: http://localhost:3000/api/health
+
+> On Render, the backend port is provided by the environment and the frontend should use `/api` or the Render backend URL.
 
 ### Default Credentials
 

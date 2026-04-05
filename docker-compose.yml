@@ -58,7 +58,7 @@ services:
       - eksamenprep_network
 
 volumes:
-  mysql_data:
+  postgres_data:
 
 networks:
   eksamenprep_network:
